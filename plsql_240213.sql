@@ -47,7 +47,7 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('v_total_comp ' || v_total_comp);      -- v_total_comp 50000
         DBMS_OUTPUT.PUT_LINE('================================');   -- ================================
         v_message := 'CLERK not ' || v_message;
-        v_comm := v_sal * .30; -- 적용 안됨.
+        v_comm := v_sal * .30; -- v_comm = 15000 이 되었지만 END 되어서 밖에서 출력되진 않음.
     END;
     DBMS_OUTPUT.PUT_LINE('v_sal ' || v_sal);                        -- v_sal 60000
     DBMS_OUTPUT.PUT_LINE('v_comm ' || v_comm);                      -- v_comm 12000
@@ -55,5 +55,20 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('================================');       -- ================================
     v_message := 'SALESMAN ' || v_message;
     DBMS_OUTPUT.PUT_LINE('v_message ' || v_message);                -- v_message SALESMAN CLERK not  eligible for commission
+END;
+/
+
+DECLARE
+    v_eid employees.employee_id%TYPE;
+    v_ename VARCHAR2(100);
+BEGIN
+    SELECT employee_id, last_name
+    INTO v_eid, v_ename
+    FROM employees
+    WHERE employee_id = &사원번호;
+--  WHERE department_id = &부서번호;
+    
+    DBMS_OUTPUT.PUT_LINE('사원번호 : ' || v_eid);
+    DBMS_OUTPUT.PUT_LINE('사원이름 : ' || v_ename);
 END;
 /
