@@ -429,10 +429,13 @@ END;
 
 -- WHILE LOOP ¹®
 DECLARE
-
+    v_idx NUMBER(2,0) := 1;
+    v_star VARCHAR2(10) := '';
 BEGIN
-    WHILE LOOP
-    
+    WHILE v_idx <= 5 LOOP
+        v_star := v_star || '*';
+        v_idx := v_idx + 1;
+        DBMS_OUTPUT.PUT_LINE(v_star);
     END LOOP;    
 END;
 /
