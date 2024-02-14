@@ -404,7 +404,7 @@ END;
 
 -- 기본 LOOOP 문
 DECLARE
-    v_idx NUMBER(2,0) := 0;
+    v_idx NUMBER(2,0) := 1;
     v_star VARCHAR2(10) := '';
 BEGIN
     LOOP
@@ -418,10 +418,11 @@ END;
 
 -- FOR LOOP 문
 DECLARE
-
+    v_star VARCHAR2(10) := '';
 BEGIN
-    FOR IN .. LOOP
-    
+    FOR idx IN 1..5 LOOP
+        v_star := v_star || '*';
+        DBMS_OUTPUT.PUT_LINE(v_star);
     END LOOP;
 END;
 /
