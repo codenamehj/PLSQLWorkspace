@@ -49,7 +49,7 @@ BEGIN
         employee_id = 0;
 
     IF SQL%rowcount = 0 THEN
-        dbms_output.put_line('정상적으로 삭제되지 않았습니다.');
+        DBMS_OUTPUT.PUT_LINE('정상적으로 삭제되지 않았습니다.');
     END IF;
 END;
 /
@@ -103,9 +103,9 @@ BEGIN
     WHERE
         e.employee_id = &사원번호;
 
-    dbms_output.put_line('사원번호 : ' || v_empid);
-    dbms_output.put_line('사원이름 : ' || v_lname);
-    dbms_output.put_line('부서이름 : ' || v_deptname);
+    DBMS_OUTPUT.PUT_LINE('사원번호 : ' || v_empid);
+    DBMS_OUTPUT.PUT_LINE('사원이름 : ' || v_lname);
+    DBMS_OUTPUT.PUT_LINE('부서이름 : ' || v_deptname);
 END;
 /
 
@@ -147,9 +147,9 @@ BEGIN
     WHERE
         employee_id = &사원번호;
 
-    dbms_output.put_line('사원이름 : ' || v_lname);
-    dbms_output.put_line('급여 : ' || v_sal);
-    dbms_output.put_line('연봉 : ' || v_annual);
+    DBMS_OUTPUT.PUT_LINE('사원이름 : ' || v_lname);
+    DBMS_OUTPUT.PUT_LINE('급여 : ' || v_sal);
+    DBMS_OUTPUT.PUT_LINE('연봉 : ' || v_annual);
 END;
 /
 
@@ -170,8 +170,8 @@ DECLARE BEGIN
         employee_id = &사원번호;
 
     IF SQL%rowcount = 0 THEN
-        dbms_output.put_line('정상적으로 삭제되지 않았습니다.');
-        dbms_output.put_line('사원번호를 확인해주세요.');
+        DBMS_OUTPUT.PUT_LINE('정상적으로 삭제되지 않았습니다.');
+        DBMS_OUTPUT.PUT_LINE('사원번호를 확인해주세요.');
     END IF;
 
 END;
@@ -190,9 +190,9 @@ BEGIN
         manager_id = &사원번호;
 
     IF v_result = 0 THEN
-        dbms_output.put_line('일반 사원입니다.');
+        DBMS_OUTPUT.PUT_LINE('일반 사원입니다.');
     ELSE
-        dbms_output.put_line('팀장입니다.');
+        DBMS_OUTPUT.PUT_LINE('팀장입니다.');
     END IF;
 
 END;
@@ -218,15 +218,15 @@ BEGIN
         employee_id = &사원번호;
 
     IF v_hyear < 5 THEN
-        dbms_output.put_line('입사한 지 5년 미만입니다.');
+        DBMS_OUTPUT.PUT_LINE('입사한 지 5년 미만입니다.');
     ELSIF v_hyear < 10 THEN
-        dbms_output.put_line('입사한 지 5년 이상 10년 미만입니다.');
+        DBMS_OUTPUT.PUT_LINE('입사한 지 5년 이상 10년 미만입니다.');
     ELSIF v_hyear < 15 THEN
-        dbms_output.put_line('입사한 지 10년 이상 15년 미만입니다.');
+        DBMS_OUTPUT.PUT_LINE('입사한 지 10년 이상 15년 미만입니다.');
     ELSIF v_hyear < 20 THEN
-        dbms_output.put_line('입사한 지 15년 이상 20년 미만입니다.');
+        DBMS_OUTPUT.PUT_LINE('입사한 지 15년 이상 20년 미만입니다.');
     ELSE
-        dbms_output.put_line('입사한 지 20년 이상입니다.');
+        DBMS_OUTPUT.PUT_LINE('입사한 지 20년 이상입니다.');
     END IF;
 
 END;
@@ -259,7 +259,7 @@ BEGIN
         v_msg := 'New employee';
     END IF;
 
-    dbms_output.put_line(v_msg);
+    DBMS_OUTPUT.PUT_LINE(v_msg);
 END;
 /
 
