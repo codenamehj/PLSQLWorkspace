@@ -4,7 +4,7 @@ SET SERVEROUTPUT ON
 -- 기본 LOOP => 조건과 관련된 변수 필수!
 -- for => 변수를 요구하지 않음
 DECLARE
-  v_num NUMBER(20) := &구구단;
+    v_num NUMBER(20) := &구구단;
 BEGIN
     FOR i IN 1 .. 9 LOOP -- 특정 범위에 존재하는 정수 값을 내부 변수
         DBMS_OUTPUT.PUT_LINE(v_num || '*' || i || '=' || v_num * i);
@@ -14,8 +14,8 @@ END;
 
 -- while => 조건과 관련된 변수
 DECLARE
-  v_num NUMBER(5) := &구구단;
-  v_count NUMBER(5) := 1; -- 범위 : 1 ~ 9, 정수 모두
+    v_num NUMBER(5) := &구구단;
+    v_count NUMBER(5) := 1; -- 범위 : 1 ~ 9, 정수 모두
 BEGIN
     WHILE v_count <= 9 LOOP
         DBMS_OUTPUT.PUT_LINE(v_num || '*' || v_count || '=' || v_num * v_count);
@@ -26,8 +26,8 @@ END;
 
 -- loop
 DECLARE
-  v_num CONSTANT NUMBER(5) := &구구단;
-  v_count NUMBER(5) := 1;
+    v_num CONSTANT NUMBER(5) := &구구단;
+    v_count NUMBER(5) := 1;
 BEGIN
     LOOP
         DBMS_OUTPUT.PUT_LINE(v_num || '*' || v_count || '=' || v_num * v_count);
@@ -39,7 +39,6 @@ END;
 
 -- 3. 구구단 2~9단까지 출력되도록 하시오.
 -- for 
-
 BEGIN
     FOR i IN 2 .. 9 LOOP 
         FOR j IN 1 .. 9 LOOP 
@@ -52,8 +51,8 @@ END;
 
 -- while => 반복조건과 관련된 변수
 DECLARE
-  v_num NUMBER(5) := 2; -- 2 ~ 9 => 반복조건
-  v_num2 NUMBER(5) := 1; -- 1 ~ 9 => 반복조건
+    v_num NUMBER(5) := 2; -- 2 ~ 9 => 반복조건
+    v_num2 NUMBER(5) := 1; -- 1 ~ 9 => 반복조건
 BEGIN
     WHILE v_num <= 9 LOOP
         v_num2 := 1;
@@ -69,8 +68,8 @@ END;
 
 -- loop
 DECLARE
-  v_num NUMBER(5) := 2;
-  v_num2 NUMBER(5) := 1;
+    v_num NUMBER(5) := 2;
+    v_num2 NUMBER(5) := 1;
 BEGIN
     LOOP
         v_num2 := 1;
@@ -88,10 +87,9 @@ END;
 
 -- 4. 구구단 2~9단까지 출력되도록 하시오.(단, 홀수단 출력)
 -- for 
-
 BEGIN
     FOR i IN 2 .. 9 LOOP 
-        IF MOD(i,2) <> 0 THEN
+        IF MOD(i,2) <> 0 THEN -- MOD(m,n) : m을 n으로 나누었을 때 나머지를 반환한다. -- <> 는 != 와 같다.
             FOR j IN 1 .. 9 LOOP 
                 DBMS_OUTPUT.PUT(i || '*' || j || '=' || i * j || ' ');
             END LOOP;
@@ -121,7 +119,7 @@ DECLARE
 BEGIN
     WHILE v_num <= 9 LOOP
         v_num2 := 1;
-        IF MOD(v_num,2) <> 0 THEN
+        IF MOD(v_num, 2) <> 0 THEN
         WHILE v_num2 <= 9 LOOP
             DBMS_OUTPUT.PUT(v_num || '*' || v_num2 || '=' || v_num * v_num2 || ' ');
             v_num2 := v_num2 + 1;
@@ -139,7 +137,7 @@ DECLARE
   v_num2 NUMBER(5) := 1;
 BEGIN
     LOOP
-        IF MOD(v_num,2) <> 0 THEN
+        IF MOD(v_num, 2) <> 0 THEN
         v_num2 := 1;
         LOOP
             DBMS_OUTPUT.PUT(v_num || '*' || v_num2 || '=' || v_num * v_num2 || ' ');
@@ -259,6 +257,7 @@ BEGIN
 END;
 /
 
+--  전체 사원 출력하기
 DECLARE
     v_min employees.employee_id%TYPE; -- 최소 사원번호
     v_max employees.employee_id%TYPE; -- 최대 사원번호
@@ -276,7 +275,7 @@ BEGIN
     FROM employees;
     
     FOR eid IN v_min .. v_max LOOP
-        SELECT COUNT(*)
+        SELECT COUNT(*) -- COUNT : 없는 행에 대해서도 0 반환
         INTO v_result
         FROM employees
         WHERE employee_id = eid;
@@ -290,7 +289,7 @@ BEGIN
         FROM employees
         WHERE employee_id = eid;
         
-        v_emp_table(eid) := v_emp_record;     
+        v_emp_table(eid) := v_emp_record;
     END LOOP;
     
     FOR eid IN v_emp_table.FIRST .. v_emp_table.LAST LOOP
@@ -339,7 +338,7 @@ BEGIN
     
     LOOP
         FETCH emp_cursor INTO v_emp_record;
-        EXIT WHEN emp_cursor%NOTFOUND;
+        EXIT WHEN emp_cursor%NOTFOUND; -- 더이상 새로운 데이터를 못 찾으면 종료
         
         -- 실제 연산 진행
         DBMS_OUTPUT.PUT(emp_cursor%ROWCOUNT || ', ');
@@ -352,14 +351,14 @@ BEGIN
     
     CLOSE emp_cursor;
    
-    -- *주의 CLOSE 된 후에는 
+    -- *주의 CLOSE 된 후에는 커서에 접근 불가.
     -- FETCH emp_cursor INTO v_emp_record;
     -- DBMS_OUTPUT.PUT(emp_cursor%ROWCOUNT || ', ');
     
 END;
 /
 
--- employees
+-- CURSOR + TABLE
 DECLARE
     CURSOR emp_cursor IS
         SELECT *
@@ -393,7 +392,7 @@ BEGIN
 END;
 /
 
---
+-- %ROWCOUNT
 DECLARE
     CURSOR emp_dept_cursor IS
         SELECT employee_id, last_name, job_id
