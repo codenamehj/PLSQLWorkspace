@@ -402,7 +402,7 @@ END;
 
 */
 
--- 기본 LOOOP 문
+-- 기본 LOOP 문
 DECLARE
     v_idx NUMBER(2,0) := 1;
     v_star VARCHAR2(10) := '';
