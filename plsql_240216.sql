@@ -471,7 +471,7 @@ EXECUTE yedam_ju(1511013689977)
 DROP PROCEDURE yedam_ju;
 -- 프로시저, IN 매개변수 하나
 CREATE PROCEDURE yedam_ju
- (p_ju_no IN VARCHAR2,)
+ (p_ju_no IN VARCHAR2)
 IS
 -- 선언부 : 내부에서 사용할 변수, 타입, 커서 등
         v_result VARCHAR2(100);
@@ -533,11 +533,11 @@ BEGIN
     WHERE employee_id = p_empno;
 
     v_result := RPAD(SUBSTR(v_ename, 1, 1), LENGTH(v_ename), '*');
-    DBMS_OUTPUT.PUT_LINE(v_result);
+    DBMS_OUTPUT.PUT_LINE(v_ename || ' -> ' || v_result);
 END;
 /
 
-EXECUTE yedam_emp(104);
+EXECUTE yedam_emp(100);
 
 /* 4. 부서번호를 입력할 경우 
 해당부서에 근무하는 사원의 사원번호, 사원이름(last_name)을 출력하는 get_emp 프로시저를 생성하시오. 
@@ -582,20 +582,20 @@ END;
 
 EXECUTE get_emp(30);
 
-/* 5. 직원들의 사번, 급여 증가치만 입력하면 Employees테이블에 쉽게 사원의 급여를 갱신할 수 있는 y_update 프로시저를 작성하세요. 
+/* 5. 직원들의 사번, 급여 증가치(비율)만 입력하면 Employees테이블에 쉽게 사원의 급여를 갱신할 수 있는 y_update 프로시저를 작성하세요. 
 만약 입력한 사원이 없는 경우에는 ‘No search employee!!’라는 메시지를 출력하세요.(예외처리)
 실행) EXECUTE y_update(200, 10)
 */
 DROP PROCEDURE y_update;
 CREATE PROCEDURE y_update
     (p_empno IN test_employees.employee_id%TYPE,
-     p_incrsal IN test_employees.salary%TYPE) --변수 이름, 타입 설정
+     p_incrsal IN NUMBER) --변수 이름, 타입 설정
 IS
 -- 선언부 : 내부에서 사용할 변수, 타입, 커서 등
     e_emp_sel_fail EXCEPTION;
 BEGIN
     UPDATE test_employees
-    SET salary = salary + p_incrsal
+    SET salary = salary * (1 + p_incrsal / 100)
     WHERE employee_id = p_empno;
     
     IF SQL%ROWCOUNT = 0 THEN
@@ -608,4 +608,6 @@ EXCEPTION
 END;
 /
 
-EXECUTE y_update(200, 0);
+EXECUTE y_update(200, 10);
+
+ROLLBACK;
